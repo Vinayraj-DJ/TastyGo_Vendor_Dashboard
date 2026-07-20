@@ -1,0 +1,88 @@
+
+/* Register Form */
+.registerSection {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.AuthForm {
+  width: 380px;
+  background-color: #ffffff;
+
+  padding: 30px;
+
+  border-radius: 10px;
+
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+/* Heading */
+.AuthForm h3 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 24px;
+}
+
+/* Labels */
+.AuthForm label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #444;
+}
+
+/* Input Fields */
+.AuthForm input {
+  width: 100%;
+  padding: 10px;
+  margin: 8px 0 18px;
+
+  border: 1px solid #ccc;
+  border-radius: 5px;
+
+  outline: none;
+  font-size: 15px;
+}
+
+/* Input Focus */
+.AuthForm input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(53, 63, 255, 0.12);
+}
+
+/* Button */
+.btnSubmit {
+  display: flex;
+  justify-content: center;
+}
+
+.btnSubmit button {
+  width: 100%;
+  padding: 10px;
+
+  border: none;
+  border-radius: 5px;
+
+  background-color: var(--primary);
+  color: white;
+
+  font-size: 16px;
+  font-weight: bold;
+
+  cursor: pointer;
+
+  transition: 0.3s;
+}
+
+.btnSubmit button:hover {
+  background-color: var(--primary-hover);
+}
+
+button:disabled{
+    background-color: gray;
+    cursor: not-allowed;
+}
+

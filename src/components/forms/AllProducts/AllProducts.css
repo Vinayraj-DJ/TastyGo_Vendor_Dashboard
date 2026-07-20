@@ -1,0 +1,160 @@
+/* ==========================
+   All Products Container
+========================== */
+
+.productsContainer {
+    width: 100%;
+    padding: var(--space-3);
+    background: var(--background);
+    min-height: 100vh;
+}
+
+/* ==========================
+   Heading
+========================== */
+
+.productHeading {
+    font-size: 2rem;
+    color: var(--primary);
+    text-align: center;
+    margin-bottom: var(--space-3);
+    font-weight: 700;
+}
+
+/* ==========================
+   Empty Products
+========================== */
+
+.noProducts {
+    text-align: center;
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    background: var(--card-bg);
+    padding: 30px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-soft);
+}
+
+/* ==========================
+   Table
+========================== */
+
+.productsTable {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--card-bg);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+}
+
+.productsTable thead {
+    background: var(--primary);
+    color: white;
+}
+
+.productsTable th,
+.productsTable td {
+    padding: 16px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.productsTable th {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.productsTable td {
+    color: var(--text);
+    font-size: 0.95rem;
+}
+
+.productsTable tbody tr {
+    transition: 0.3s;
+}
+
+.productsTable tbody tr:hover {
+    background: rgba(53, 63, 255, 0.05);
+}
+
+/* ==========================
+   Product Image
+========================== */
+
+.productImage {
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--border);
+    margin: auto;
+}
+
+/* ==========================
+   Delete Button
+========================== */
+
+.deleteBtn {
+    background: #dc2626;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.deleteBtn:hover {
+    background: #b91c1c;
+    transform: translateY(-2px);
+}
+
+/* ==========================
+   Responsive
+========================== */
+
+@media (max-width: 768px) {
+
+    .productsContainer {
+        padding: var(--space-2);
+    }
+
+    .productHeading {
+        font-size: 1.5rem;
+    }
+
+    .productsTable {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    .productImage {
+        width: 60px;
+        height: 60px;
+    }
+
+    .productsTable th,
+    .productsTable td {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .productHeading {
+        font-size: 1.3rem;
+    }
+
+    .deleteBtn {
+        padding: 6px 12px;
+        font-size: 0.85rem;
+    }
+
+    .productImage {
+        width: 50px;
+        height: 50px;
+    }
+}

@@ -1,0 +1,23 @@
+.landingsection {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.collectionSection {
+    display: flex;
+    flex: 1;
+    margin: 0;
+    width: 100%;
+    overflow: hidden;
+}
+
+.contentPanel {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 12px 24px 16px;
+    overflow: auto;
+}
