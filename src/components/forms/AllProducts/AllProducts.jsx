@@ -77,6 +77,48 @@ const AllProducts = () => {
     }
   };
 
+  const updateProductImage = async (e, productId) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      const token =
+        localStorage.getItem("loginToken") ||
+        localStorage.getItem("token");
+
+      if (!token) {
+        alert("Please Login Again");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("image", file);
+
+      const response = await fetch(
+        `${API_URL}/product/update-image/${productId}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          body: formData,
+        }
+      );
+
+      const data = await response.json();
+
+      if (response.ok && data.success !== false) {
+        alert(data.message || "Image Updated Successfully");
+        ProductsHandler();
+      } else {
+        alert(data.message || "Failed to update image");
+      }
+    } catch (error) {
+      console.log(error);
+      alert("Failed to update image");
+    }
+  };
+
   useEffect(() => {
     ProductsHandler();
   }, []);
@@ -106,21 +148,33 @@ const AllProducts = () => {
                 <td>₹{item.price}</td>
 
                 <td>
-                  {item.image ? (
-                    <img
-                      src={
-                        item.image.startsWith("data:") ||
-                        item.image.startsWith("http://") ||
-                        item.image.startsWith("https://")
-                          ? item.image
-                          : `${API_URL}/uploads/${item.image}`
-                      }
-                      alt={item.productName}
-                      className="productImage"
+                  <div className="updateImageContainer">
+                    {item.image ? (
+                      <img
+                        src={
+                          item.image.startsWith("data:") ||
+                          item.image.startsWith("http://") ||
+                          item.image.startsWith("https://")
+                            ? item.image
+                            : `${API_URL}/uploads/${item.image}`
+                        }
+                        alt={item.productName}
+                        className="productImage"
+                      />
+                    ) : (
+                      <span>No Image</span>
+                    )}
+                    <label htmlFor={`file-${item._id}`} className="updateImageLabel">
+                      Change Image
+                    </label>
+                    <input
+                      type="file"
+                      id={`file-${item._id}`}
+                      className="updateImageInput"
+                      accept="image/*"
+                      onChange={(e) => updateProductImage(e, item._id)}
                     />
-                  ) : (
-                    <span>No Image</span>
-                  )}
+                  </div>
                 </td>
 
                 <td>

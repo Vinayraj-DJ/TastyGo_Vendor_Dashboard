@@ -58,6 +58,42 @@ const UserDetails = () => {
     }
   };
 
+  const updateFirmImage = async (e, firmId) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    try {
+      const token = localStorage.getItem("token") || localStorage.getItem("loginToken");
+      if (!token) {
+        alert("Session expired. Please log in again.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("image", file);
+
+      const response = await fetch(`${API_URL}/firm/update-image/${firmId}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success !== false) {
+        alert(data.message || "Restaurant image updated successfully");
+        fetchProfile();
+      } else {
+        alert(data.message || "Failed to update restaurant image");
+      }
+    } catch (err) {
+      console.error(err);
+      alert("Failed to update restaurant image");
+    }
+  };
+
   useEffect(() => {
     fetchProfile();
   }, []);
@@ -86,7 +122,6 @@ const UserDetails = () => {
           </div>
           <div className="detail-item" style={{ borderColor: "#fee2e2", backgroundColor: "#fef2f2" }}>
             <div className="detail-info">
-              <span className="detail-label" style={{ color: "#ef4444" }}>Message</span>
               <span className="detail-value" style={{ color: "#991b1b" }}>{error}</span>
             </div>
           </div>
@@ -115,22 +150,51 @@ const UserDetails = () => {
             </div>
           </div>
 
-
-          <div className="detail-item">
-            <span className="detail-icon">🏪</span>
-            <div className="detail-info">
+          <div className="detail-item" style={{ paddingRight: "10px" }}>
+            <span className="detail-icon" style={{ marginTop: "12px" }}>🏪</span>
+            <div className="detail-info" style={{ width: "100%" }}>
               <span className="detail-label">Linked Restaurant</span>
               {firm ? (
-                <>
-                  <span className="detail-value" style={{ color: "var(--primary-hover)" }}>
-                    {firm.firmName}
-                  </span>
-                  {firm.area && (
-                    <span style={{ fontSize: "12px", color: "var(--text-secondary)", marginTop: "2px" }}>
-                      📍 {firm.area} {firm.offer ? `• 🏷️ ${firm.offer}` : ""}
+                <div className="firm-profile-container">
+                  <div className="firm-text-details">
+                    <span className="detail-value" style={{ color: "var(--primary-hover)" }}>
+                      {firm.firmName}
                     </span>
-                  )}
-                </>
+                    {firm.area && (
+                      <span style={{ fontSize: "12px", color: "var(--text-secondary)", marginTop: "2px" }}>
+                        📍 {firm.area} {firm.offer ? `• 🏷️ ${firm.offer}` : ""}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="firm-image-uploader">
+                    {firm.image ? (
+                      <img
+                        src={
+                          firm.image.startsWith("data:") ||
+                          firm.image.startsWith("http://") ||
+                          firm.image.startsWith("https://")
+                            ? firm.image
+                            : `${API_URL}/uploads/${firm.image}`
+                        }
+                        alt={firm.firmName}
+                        className="firmProfileImage"
+                      />
+                    ) : (
+                      <div className="firmNoImage">No Image</div>
+                    )}
+                    <label htmlFor="firm-file-upload" className="updateFirmImageLabel">
+                      Change Photo
+                    </label>
+                    <input
+                      type="file"
+                      id="firm-file-upload"
+                      className="firmImageInput"
+                      accept="image/*"
+                      onChange={(e) => updateFirmImage(e, firm._id || localStorage.getItem("firmId"))}
+                    />
+                  </div>
+                </div>
               ) : (
                 <span className="detail-value no-firm">No firm registered yet. Please add a firm from the sidebar.</span>
               )}
